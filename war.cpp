@@ -178,7 +178,7 @@ int main() {
 			cout << "Tie!";
 			ties++;
 		}
-		cout << "\n" << endl;
+		cout << endl << endl;
 
 		counter++;
 	}
