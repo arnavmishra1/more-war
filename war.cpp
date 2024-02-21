@@ -4,44 +4,103 @@
 
 #include <iostream>
 #include <map>
-#include "Deck.h"
+#include <vector>
+#include <stdlib.h>
+#include <time.h>
 
 using namespace std;
 
-
-
-// card class
+// Card class
 class Card {
 	char rank;
 	char suit;
 	map<char,int> dictionary;
 
-	Card(char r, char s) {
-		rank = r;
-		suit = s;
-		dictionary = {{'A',1}, {'2',2}, {'3',3}, {'4',4}, {'5',5}, {'6',6}, {'7',7}, {'8',8}, {'9',9}, {'T',10}, {'J',11}, {'Q',12}, {'K',13}};
-	}
-
-	void display() {
-		if (rank != 'T') {
-			cout << rank << suit;
-		} else {
-			cout << 10 << suit;
+	public:
+		Card(char r, char s) {
+			rank = r;
+			suit = s;
+			dictionary = {{'A',1}, {'2',2}, {'3',3}, {'4',4}, {'5',5}, {'6',6}, {'7',7}, {'8',8}, {'9',9}, {'T',10}, {'J',11}, {'Q',12}, {'K',13}};
 		}
-	}
 
-	int compare(Card other) {
-		if (dictionary[rank] > dictionary[other.rank]) {
-			return 1;
-		} else if (dictionary[rank] == dictionary[other.rank]) {
-			return 0;
-		} else {
-			return -1;
+		void display() {
+			if (rank != 'T') {
+				cout << rank << suit;
+			} else {
+				cout << 10 << suit;
+			}
 		}
-	}
+
+		int compare(Card other) {
+			if (dictionary[rank] > dictionary[other.rank]) {
+				return 1;
+			} else if (dictionary[rank] == dictionary[other.rank]) {
+				return 0;
+			} else {
+				return -1;
+			}
+		}
 };
 
+// Deck class
+class Deck {
+	vector<char> suits;
+	vector<char> ranks;
+	vector<Card> myDeck;
+	public:
+		Deck() {
 
+			suits = {'C','S','D','H'};
+			ranks = {'A','2','3','4','5','6','7','8','9','T','J','Q','K'};
+			
+			for (int i = 0; i < 4; i++)
+				{
+					for (int j = 0; j < 13; j++)
+					{
+						myDeck.push_back(Card(ranks[j], suits[i]));
+					}
+				}
+		}
+
+		Card deal() {
+			Card temp = myDeck[0];
+			myDeck.erase(myDeck.begin());
+			return temp;
+		}
+
+		void display()
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				for (int j = 0; j < 13; j++)
+				{
+					if (j < 12) {
+						myDeck[(i*13 + j)].display();
+						cout << ", ";
+					} else {
+						myDeck[(i*13 + j)].display();
+						cout  << "\n";
+					}
+				}
+			}
+		}
+
+		void shuffle() {
+			vector<Card> temp;
+			srand(time(NULL));
+
+			for (int i = 0; i < 52; i++) {
+				srand(time(NULL));
+				int random = rand() % myDeck.size();
+
+				temp.push_back(myDeck[random]);
+				swap(myDeck[random], myDeck[0]);
+				myDeck.erase(myDeck.begin());
+			}
+
+			myDeck = temp;
+		}
+};
 
 
 
