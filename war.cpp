@@ -128,7 +128,6 @@ int main() {
 	getline(cin, p1);
 	cout << "Enter the name of the second player: ";
 	getline(cin, p2);
-	cout << endl;
 	cout << "How many games will they play? ";
 	cin >> games;
 	cout << endl;
