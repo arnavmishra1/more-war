@@ -150,6 +150,7 @@ int main() {
 			card2 = myDeck.deal();
 		}
 		catch (runtime_error) {
+			cout << "Error - Deck is empty\n" << endl;
 			break;
 		}
 
