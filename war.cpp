@@ -102,15 +102,6 @@ class Deck {
 		}
 };
 
-
-
-
-
-
-
-
-
-
 int main() {
 	Deck myDeck;
 
