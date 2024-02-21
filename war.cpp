@@ -17,6 +17,11 @@ class Card {
 	map<char,int> dictionary;
 
 	public:
+		Card() {
+			rank = '0';
+			suit = '0';
+		}
+
 		Card(char r, char s) {
 			rank = r;
 			suit = s;
@@ -46,7 +51,9 @@ class Card {
 class Deck {
 	vector<char> suits;
 	vector<char> ranks;
-	vector<Card> myDeck;
+	Card myDeck[52];
+	int index = 0;
+
 	public:
 		Deck() {
 
@@ -57,14 +64,17 @@ class Deck {
 				{
 					for (int j = 0; j < 13; j++)
 					{
-						myDeck.push_back(Card(ranks[j], suits[i]));
+						myDeck[i*13 + j] = Card(ranks[j], suits[i]);
 					}
 				}
 		}
 
 		Card deal() {
-			Card temp = myDeck[0];
-			myDeck.erase(myDeck.begin());
+			if (isEmpty()) {
+				throw runtime_error("Error - Deck is empty");
+			}
+			Card temp = myDeck[index];
+			index++;
 			return temp;
 		}
 
@@ -86,19 +96,16 @@ class Deck {
 		}
 
 		void shuffle() {
-			vector<Card> temp;
 			srand(time(NULL));
 
 			for (int i = 0; i < 52; i++) {
-				srand(time(NULL));
-				int random = rand() % myDeck.size();
-
-				temp.push_back(myDeck[random]);
-				swap(myDeck[random], myDeck[0]);
-				myDeck.erase(myDeck.begin());
+				int random = rand() % 52;
+				swap(myDeck[i],myDeck[random]);
 			}
+		}
 
-			myDeck = temp;
+		bool isEmpty() {
+			return (index >= 52) ? true : false;
 		}
 };
 
@@ -135,9 +142,17 @@ int main() {
 	myDeck.display();
 	cout << endl;
 
-	while(counter < 26) {
-		Card card1 = myDeck.deal();
-		Card card2 = myDeck.deal();
+	while(counter < games) {
+		Card card1;
+		Card card2;
+
+		try {
+			card1 = myDeck.deal();
+			card2 = myDeck.deal();
+		}
+		catch (runtime_error) {
+			break;
+		}
 
 		cout << "Game " << counter+1 << endl;
 		cout << "--------" << endl;
