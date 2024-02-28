@@ -149,7 +149,7 @@ int main() {
 			card2 = myDeck.deal();
 		}
 		catch (const char* str) {
-			cout << str << endl;
+			cout << str << endl << endl;
 			break;
 		}
 
@@ -182,7 +182,6 @@ int main() {
 		counter++;
 	}
 
-	cout << endl;
 	cout << "------Final Stats------" << endl;
 	cout << "	" << p1 << "	vs.	" << p2 << endl;
 	cout << "Wins	" << p1wins << "		" << p2wins << endl;
