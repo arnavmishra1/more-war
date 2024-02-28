@@ -71,11 +71,10 @@ class Deck {
 
 		Card deal() {
 			if (isEmpty()) {
-				throw runtime_error("Error - Deck is empty");
+				throw "Error - Deck is empty";
 			}
-			Card temp = myDeck[index];
 			index++;
-			return temp;
+			return myDeck[index-1];
 		}
 
 		void display()
@@ -149,8 +148,8 @@ int main() {
 			card1 = myDeck.deal();
 			card2 = myDeck.deal();
 		}
-		catch (runtime_error) {
-			cout << "Error - Deck is empty\n" << endl;
+		catch (const char* str) {
+			cout << str << endl;
 			break;
 		}
 
@@ -183,6 +182,7 @@ int main() {
 		counter++;
 	}
 
+	cout << endl;
 	cout << "------Final Stats------" << endl;
 	cout << "	" << p1 << "	vs.	" << p2 << endl;
 	cout << "Wins	" << p1wins << "		" << p2wins << endl;
